@@ -3,7 +3,7 @@
 import { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { parseCommand, ParsedCommand } from "../utils/command-parser";
-import fileSystem, { FileSystem } from "../utils/file-system";
+import fileSystem, { FileSystemNode } from "../utils/file-system";
 import help from "./commands/help";
 import projects from "./commands/projects";
 import resume from "./commands/resume";
@@ -15,9 +15,7 @@ import cd from "./commands/cd";
 const Terminal = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [command, setCommand] = useState<string>("");
-  const [currentDir, setCurrentDir] = useState<FileSystem>(
-    fileSystem[""].children!.home.children!.visitor,
-  );
+  const [currentDir, setCurrentDir] = useState<FileSystemNode>(fileSystem[""]?.children?.home?.children?.visitor ?? { type: "directory", children: {} });
   const [currentPath, setCurrentPath] = useState<string[]>(["home", "visitor"]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -35,13 +33,14 @@ const Terminal = () => {
       "                              ",
       "                              ",
       "Welcome to my portfolio! Type 'help' to see available commands.",
-      "",
+      ""
     ]);
   }, []);
 
   useEffect(() => {
     inputRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [command, history]);
+    inputRef.current?.focus();
+  }, [history]);
 
   const handleCommand = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -84,12 +83,6 @@ const Terminal = () => {
         }
         output = cdOutput;
         break;
-      case "cat":
-        output = cat(args, currentDir);
-        break;
-      case "echo":
-        output = echo(args, currentDir);
-        break;
       default:
         output = [`Command not found: ${command}`];
         break;
@@ -105,7 +98,7 @@ const Terminal = () => {
   };
 
   return (
-    <div className="flex h-screen flex-col bg-[#1e1e2e] p-4 font-mono text-[#cdd6f4]">
+    <div className="bg-[#1e1e2e] text-[#cdd6f4] p-4 h-screen flex flex-col font-mono">
       <div className="flex-grow overflow-y-auto">
         {history.map((line, index) => (
           <div key={index} className="whitespace-pre-wrap">
@@ -122,12 +115,10 @@ const Terminal = () => {
           <span className="text-green-400"> $</span>
           <input
             ref={inputRef}
-            className="flex-grow bg-transparent pl-2 text-[#cdd6f4] outline-none"
+            className="bg-transparent text-[#cdd6f4] outline-none flex-grow pl-2"
             type="text"
             value={command}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setCommand(e.target.value)
-            }
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setCommand(e.target.value)}
             onKeyPress={handleCommand}
             autoFocus
           />

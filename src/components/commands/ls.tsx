@@ -1,6 +1,6 @@
-import { FileSystem } from "../../utils/file-system";
+import { FileSystemNode } from "../../utils/file-system";
 
-const ls = (currentDir: FileSystem): string[] => {
+const ls = (currentDir: FileSystemNode): string[] => {
   if (!currentDir || typeof currentDir !== "object") {
     return ["No such directory"];
   }
@@ -11,7 +11,8 @@ const ls = (currentDir: FileSystem): string[] => {
   }
 
   return Object.keys(children).map((key) => {
-    if (children[key].type === "directory") {
+    const child = children[key];
+    if (child && child.type === "directory") {
       return key + "/";
     } else {
       return key;

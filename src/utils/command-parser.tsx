@@ -6,15 +6,16 @@ export interface ParsedCommand {
 
 export const parseCommand = (input: string): ParsedCommand => {
   const parts = input.trim().split(/\s+/);
-  const command = parts[0];
+  const command = parts[0] ?? "";
   const args: string[] = [];
   const flags: Record<string, boolean> = {};
 
   for (let i = 1; i < parts.length; i++) {
-    if (parts[i].startsWith('-')) {
-      flags[parts[i]] = true;
-    } else {
-      args.push(parts[i]);
+    const part = parts[i];
+    if (part?.startsWith('-')) {
+      flags[part] = true;
+    } else if (part) {
+      args.push(part);
     }
   }
 

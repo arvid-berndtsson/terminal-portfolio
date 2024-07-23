@@ -1,10 +1,10 @@
-export interface FileSystem {
-  [key: string]: {
-    type: "file" | "directory";
-    content?: string;
-    children?: FileSystem;
-  };
+export interface FileSystemNode {
+  type: "file" | "directory";
+  content?: string;
+  children?: FileSystem;
 }
+
+export type FileSystem = Record<string, FileSystemNode>;
 
 const fileSystem: FileSystem = {
   "": {
