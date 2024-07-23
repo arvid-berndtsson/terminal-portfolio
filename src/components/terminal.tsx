@@ -3,15 +3,22 @@
 import { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { parseCommand, ParsedCommand } from '../utils/command-parser';
+import fileSystem, { FileSystem } from '../utils/file-system';
 import help from './commands/help';
 import projects from './commands/projects';
 import resume from './commands/resume';
 import clear from './commands/clear';
 import man from './commands/man';
+import ls from './commands/ls';
+import cd from './commands/cd';
+import cat from './commands/cat';
+import echo from './commands/echo';
 
 const Terminal = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [command, setCommand] = useState<string>('');
+  const [currentDir, setCurrentDir] = useState<FileSystem>(fileSystem.home);
+  const [currentPath, setCurrentPath] = useState<string[]>(['home']);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -62,6 +69,23 @@ const Terminal = () => {
       case 'man':
         output = man(args);
         break;
+      case 'ls':
+        output = ls(currentDir);
+        break;
+      case 'cd':
+        const [cdOutput, newDir, newPath] = cd(args, currentDir, currentPath);
+        if (newDir) {
+          setCurrentDir(newDir);
+          setCurrentPath(newPath);
+        }
+        output = cdOutput;
+        break;
+      case 'cat':
+        output = cat(args, currentDir);
+        break;
+      case 'echo':
+        output = echo(args, currentDir);
+        break;
       default:
         output = [`Command not found: ${command}`];
         break;
@@ -82,8 +106,8 @@ const Terminal = () => {
           </div>
         ))}
         <div className="flex">
-          <span className="pr-2 text-green-400">{`user@hostname`}</span>
-          <span className="text-blue-400">~/current-dir</span>
+          <span className="pr-2 text-green-400">{`visitor@arvid`}</span>
+          <span className="text-blue-400">~/{currentPath.join('/')}</span>
           <span className="text-green-400"> $</span>
           <input
             ref={inputRef}
