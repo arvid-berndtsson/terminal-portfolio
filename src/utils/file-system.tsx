@@ -1,43 +1,43 @@
 export interface FileSystem {
   [key: string]: {
-    type: 'file' | 'directory';
+    type: "file" | "directory";
     content?: string;
     children?: FileSystem;
   };
 }
 
 const fileSystem: FileSystem = {
-  '': {
-    type: 'directory',
+  "": {
+    type: "directory",
     children: {
       home: {
-        type: 'directory',
+        type: "directory",
         children: {
           visitor: {
-            type: 'directory',
+            type: "directory",
             children: {
               documents: {
-                type: 'directory',
+                type: "directory",
                 children: {
-                  'file1.txt': {
-                    type: 'file',
-                    content: 'This is file1 content.',
+                  "file1.txt": {
+                    type: "file",
+                    content: "This is file1 content.",
                   },
-                  'file2.txt': {
-                    type: 'file',
-                    content: 'This is file2 content.',
+                  "file2.txt": {
+                    type: "file",
+                    content: "This is file2 content.",
                   },
                 },
               },
               projects: {
-                type: 'directory',
+                type: "directory",
                 children: {
-                  'project1': {
-                    type: 'directory',
+                  project1: {
+                    type: "directory",
                     children: {
-                      'readme.md': {
-                        type: 'file',
-                        content: 'Project 1 Readme',
+                      "readme.md": {
+                        type: "file",
+                        content: "Project 1 Readme",
                       },
                     },
                   },
@@ -48,41 +48,41 @@ const fileSystem: FileSystem = {
         },
       },
       bin: {
-        type: 'directory',
+        type: "directory",
         children: {
-          'bash': { type: 'file', content: 'Binary file for bash' },
-          'ls': { type: 'file', content: 'Binary file for ls' },
+          bash: { type: "file", content: "Binary file for bash" },
+          ls: { type: "file", content: "Binary file for ls" },
         },
       },
       etc: {
-        type: 'directory',
+        type: "directory",
         children: {
-          'passwd': { type: 'file', content: 'User account information' },
-          'hosts': { type: 'file', content: 'Static table lookup for hostnames' },
+          passwd: { type: "file", content: "User account information" },
+          hosts: { type: "file", content: "Static table lookup for hostnames" },
         },
       },
       tmp: {
-        type: 'directory',
+        type: "directory",
         children: {},
       },
       var: {
-        type: 'directory',
+        type: "directory",
         children: {
           log: {
-            type: 'directory',
+            type: "directory",
             children: {
-              'syslog': { type: 'file', content: 'System log file' },
+              syslog: { type: "file", content: "System log file" },
             },
           },
         },
       },
       usr: {
-        type: 'directory',
+        type: "directory",
         children: {
           bin: {
-            type: 'directory',
+            type: "directory",
             children: {
-              'python': { type: 'file', content: 'Python interpreter' },
+              python: { type: "file", content: "Python interpreter" },
             },
           },
         },

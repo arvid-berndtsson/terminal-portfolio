@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { parseCommand, ParsedCommand } from '../utils/command-parser';
-import fileSystem, { FileSystem } from '../utils/file-system';
-import help from './commands/help';
-import projects from './commands/projects';
-import resume from './commands/resume';
-import clear from './commands/clear';
-import man from './commands/man';
-import ls from './commands/ls';
-import cd from './commands/cd';
-import cat from './commands/cat';
-import echo from './commands/echo';
+import { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { parseCommand, ParsedCommand } from "../utils/command-parser";
+import fileSystem, { FileSystem } from "../utils/file-system";
+import help from "./commands/help";
+import projects from "./commands/projects";
+import resume from "./commands/resume";
+import clear from "./commands/clear";
+import man from "./commands/man";
+import ls from "./commands/ls";
+import cd from "./commands/cd";
 
 const Terminal = () => {
   const [history, setHistory] = useState<string[]>([]);
-  const [command, setCommand] = useState<string>('');
-  const [currentDir, setCurrentDir] = useState<FileSystem>(fileSystem[''].children!.home.children!.visitor);
-  const [currentPath, setCurrentPath] = useState<string[]>(['home', 'visitor']);
+  const [command, setCommand] = useState<string>("");
+  const [currentDir, setCurrentDir] = useState<FileSystem>(
+    fileSystem[""].children!.home.children!.visitor,
+  );
+  const [currentPath, setCurrentPath] = useState<string[]>(["home", "visitor"]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -35,20 +35,20 @@ const Terminal = () => {
       "                              ",
       "                              ",
       "Welcome to my portfolio! Type 'help' to see available commands.",
-      ""
+      "",
     ]);
   }, []);
 
   useEffect(() => {
-    inputRef.current?.scrollIntoView({ behavior: 'smooth' });
+    inputRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [command, history]);
 
   const handleCommand = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       const parsedCommand = parseCommand(command);
       setHistory((prevHistory) => [...prevHistory, `$ ${command}`]);
       executeCommand(parsedCommand);
-      setCommand('');
+      setCommand("");
     }
   };
 
@@ -57,26 +57,26 @@ const Terminal = () => {
     const navigate = (url: string) => router.push(url);
 
     switch (command) {
-      case 'help':
+      case "help":
         output = help();
         break;
-      case 'projects':
+      case "projects":
         output = projects(args, flags, navigate);
         break;
-      case 'resume':
+      case "resume":
         output = resume(navigate);
         break;
-      case 'clear':
+      case "clear":
         output = clear();
         setHistory([]);
         break;
-      case 'man':
+      case "man":
         output = man(args);
         break;
-      case 'ls':
+      case "ls":
         output = ls(currentDir);
         break;
-      case 'cd':
+      case "cd":
         const [cdOutput, newDir, newPath] = cd(args, currentDir, currentPath);
         if (newDir) {
           setCurrentDir(newDir);
@@ -84,10 +84,10 @@ const Terminal = () => {
         }
         output = cdOutput;
         break;
-      case 'cat':
+      case "cat":
         output = cat(args, currentDir);
         break;
-      case 'echo':
+      case "echo":
         output = echo(args, currentDir);
         break;
       default:
@@ -98,18 +98,18 @@ const Terminal = () => {
   };
 
   const getCurrentPath = () => {
-    if (currentPath.join('/') === 'home/visitor') {
+    if (currentPath.join("/") === "home/visitor") {
       return `~`;
     }
-    return `/${currentPath.join('/')}`;
+    return `/${currentPath.join("/")}`;
   };
 
   return (
-    <div className="bg-[#1e1e2e] text-[#cdd6f4] p-4 h-screen flex flex-col font-mono">
+    <div className="flex h-screen flex-col bg-[#1e1e2e] p-4 font-mono text-[#cdd6f4]">
       <div className="flex-grow overflow-y-auto">
         {history.map((line, index) => (
           <div key={index} className="whitespace-pre-wrap">
-            {line.startsWith('$') ? (
+            {line.startsWith("$") ? (
               <span className="text-green-400">{line}</span>
             ) : (
               <span>{line}</span>
@@ -122,10 +122,12 @@ const Terminal = () => {
           <span className="text-green-400"> $</span>
           <input
             ref={inputRef}
-            className="bg-transparent text-[#cdd6f4] outline-none flex-grow pl-2"
+            className="flex-grow bg-transparent pl-2 text-[#cdd6f4] outline-none"
             type="text"
             value={command}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setCommand(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setCommand(e.target.value)
+            }
             onKeyPress={handleCommand}
             autoFocus
           />
