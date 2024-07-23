@@ -1,17 +1,19 @@
-import { FileSystem } from '../../utils/file-system';
+import fileSystem, { FileSystem } from '../../utils/file-system';
 
 const cd = (args: string[], currentDir: FileSystem, currentPath: string[]): [string[], FileSystem | null, string[]] => {
   if (args.length === 0) {
-    return [['Usage: cd <directory>'], currentDir, currentPath];
+    const homeDir = fileSystem[''].children!.home.children!.visitor;
+    const homePath = ['home', 'visitor'];
+    return [[], homeDir, homePath];
   }
 
   const targetDir = args[0];
   if (targetDir === '..') {
-    if (currentPath.length === 1) {
-      return [['cd: already at root directory'], currentDir, currentPath];
+    if (currentPath.length === 0) {
+      return [['cd: already at root directory'], fileSystem, []];
     }
     const newPath = currentPath.slice(0, -1);
-    let newDir: FileSystem = fileSystem;
+    let newDir: FileSystem = fileSystem[''];
     newPath.forEach(dir => {
       newDir = newDir.children![dir];
     });

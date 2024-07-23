@@ -17,8 +17,8 @@ import echo from './commands/echo';
 const Terminal = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [command, setCommand] = useState<string>('');
-  const [currentDir, setCurrentDir] = useState<FileSystem>(fileSystem.home);
-  const [currentPath, setCurrentPath] = useState<string[]>(['home']);
+  const [currentDir, setCurrentDir] = useState<FileSystem>(fileSystem[''].children!.home.children!.visitor);
+  const [currentPath, setCurrentPath] = useState<string[]>(['home', 'visitor']);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -38,6 +38,10 @@ const Terminal = () => {
       ""
     ]);
   }, []);
+
+  useEffect(() => {
+    inputRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [command, history]);
 
   const handleCommand = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -93,6 +97,13 @@ const Terminal = () => {
     setHistory((prevHistory) => [...prevHistory, ...output]);
   };
 
+  const getCurrentPath = () => {
+    if (currentPath.join('/') === 'home/visitor') {
+      return `~`;
+    }
+    return `/${currentPath.join('/')}`;
+  };
+
   return (
     <div className="bg-[#1e1e2e] text-[#cdd6f4] p-4 h-screen flex flex-col font-mono">
       <div className="flex-grow overflow-y-auto">
@@ -107,7 +118,7 @@ const Terminal = () => {
         ))}
         <div className="flex">
           <span className="pr-2 text-green-400">{`visitor@arvid`}</span>
-          <span className="text-blue-400">~/{currentPath.join('/')}</span>
+          <span className="text-blue-400">{getCurrentPath()}</span>
           <span className="text-green-400"> $</span>
           <input
             ref={inputRef}
