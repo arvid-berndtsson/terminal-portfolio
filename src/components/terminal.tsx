@@ -11,6 +11,8 @@ import clear from "./commands/clear";
 import man from "./commands/man";
 import ls from "./commands/ls";
 import cd from "./commands/cd";
+import website from "./commands/website";
+import whoami from "./commands/whoami";
 
 const Terminal = () => {
   const [history, setHistory] = useState<string[]>([]);
@@ -61,6 +63,12 @@ const Terminal = () => {
         break;
       case "projects":
         output = projects(args, flags, navigate);
+        break;
+      case "website":
+        output = website();
+        break
+      case "whoami":
+        output = whoami();
         break;
       case "resume":
         output = resume(navigate);
