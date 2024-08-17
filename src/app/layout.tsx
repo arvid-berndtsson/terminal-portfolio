@@ -4,8 +4,8 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Arvid Berndtsson's Portfolio",
-  description: "Arvid Berndtsson's portfolio presented in a terminal interface.",
+  title: "Arvid Berndtsson's Terminal Project",
+  description: "Arvid Berndtsson's terminal project presented in a terminal interface.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
