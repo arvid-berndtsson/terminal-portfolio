@@ -4,13 +4,15 @@ import { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { parseCommand, ParsedCommand } from "../utils/command-parser";
 import fileSystem, { FileSystemNode } from "../utils/file-system";
+import about from "./commands/about";
+import cd from "./commands/cd";
+import clear from "./commands/clear";
+import contact from "./commands/contact";
 import help from "./commands/help";
+import ls from "./commands/ls";
+import man from "./commands/man";
 import projects from "./commands/projects";
 import resume from "./commands/resume";
-import clear from "./commands/clear";
-import man from "./commands/man";
-import ls from "./commands/ls";
-import cd from "./commands/cd";
 import website from "./commands/website";
 import whoami from "./commands/whoami";
 
@@ -69,6 +71,12 @@ const Terminal = () => {
         break
       case "whoami":
         output = whoami();
+        break;
+      case "about":
+        output = about();
+        break;
+      case "contact":
+        output = contact();
         break;
       case "resume":
         output = resume(navigate);
