@@ -1,29 +1,54 @@
-# Create T3 App
+# Terminal Portfolio
+This project is a personal terminal portfolio built using the [T3 Stack](https://create.t3.gg/), which is bootstrapped with `create-t3-app`.
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Getting Started
+### Prerequisites
+Ensure you have the following installed on your local development environment:
 
-## What's next? How do I make an app with this?
+- Node.js (version 22.x or later)
+- npm
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### Installation
+Clone the repository:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```bash
+git clone https://github.com/dotarvid/terminal-portfolio.git
+cd terminal-portfolio
+```
+### Install the dependencies:
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+```bash
+npm install
+```
+### Set up environment variables:
 
-## Learn More
+Copy the .env.example file to .env and fill in the necessary environment variables. As of **2024-09-17** there are no environment variables needed.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+```bash
+cp .env.example .env
+```
+### Running the Development Server
+To start the development server, run:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Building for Production
+To build the project for production, run:
 
-## How do I deploy this?
+```bash
+npm run build
+```
+The output will be located in the .next directory. You can then start the production server with:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+npm start
+```
+
+## Contributing
+If you would like to contribute to this project, please fork the repository and create a new branch for your feature or bugfix. Submit a pull request, and your changes will be reviewed.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) for more information.
